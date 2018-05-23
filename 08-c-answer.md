@@ -90,7 +90,7 @@ mutating func performRound() {
 }
 ```
 
-このとき、 `friendParty.members.update { ... }` は `self.friendParty.members.update { ... }` であり、 `self` に対する変更となります。つまり、排他則によってこのクロージャ式の中では `self` に直接変更を加えることはできません。しかし、 `&enemyParty.leader` （ `&self.enemyParty.leader` ）があるので排他速に引っかかります（ Swift 4.1 でこれがコンパイルエラーにならないのはおそらく排他則のチェック漏れのバグです）。
+このとき、 `friendParty.members.update { ... }` は `self.friendParty.members.update { ... }` であり、 `self` に対する変更となります。つまり、排他則によってこのクロージャ式の中では `self` に直接変更を加えることはできません。しかし、 `&enemyParty.leader` （ `&self.enemyParty.leader` ）があるので排他則に引っかかります（ Swift 4.1 でこれがコンパイルエラーにならないのはおそらく排他則のチェック漏れのバグです）。
 
 そのため、次のように一度変数を介してアクセスしなければなりません。
 
