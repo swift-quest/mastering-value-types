@@ -39,3 +39,7 @@ enemyParty.members.updateRandomElement(using: &generator) {
 第一引数で渡していた `enemyParty.members` がメソッドのレシーバーとして暗黙に渡されています。
 
 なお、 `updateRandomElement` を `Collection` ではなく `MutableCollection` の `extension` としているのは、 `subscript { set }` が `MutableCollection` でないと使えないからです。
+
+---
+
+- [次の課題](06-a.md)
