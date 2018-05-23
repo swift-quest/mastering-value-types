@@ -66,7 +66,7 @@ let idToUser: [String: User] = users.reduce(into: [:]) { $0[$1.id] = $1 }
 
 ```swift
 extension Array {
-    mutable func update(_ operation: (inout Element) -> Void) { ... }
+    mutating func update(_ operation: (inout Element) -> Void) { ... }
 }
 
 var values: [Int] = [2, 3, 5]
