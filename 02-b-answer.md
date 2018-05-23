@@ -48,3 +48,7 @@
 -performAttack(by: archfiend, to: hero)
 +hero = performAttack(by: archfiend, to: hero)
 ```
+
+---
+
+- [次の課題](02-b2.md)

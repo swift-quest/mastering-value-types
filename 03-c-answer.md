@@ -1,6 +1,6 @@
 # 03-b: 値型（ Computed Property ） 解答の解説
 
-`03-c-answer.swift` の `03-a-answer.swift` からの主な変更点は、 `performAttack` の呼び出し時に `&` を付けたことだけです。
+[03-c-answer.swift](03-c-answer.swift) の [03-a-answer.swift](03-a-answer.swift) からの主な変更点は、 `performAttack` の呼び出し時に `&` を付けたことだけです。
 
 ```diff
  for character in friendParty.members {
@@ -123,3 +123,7 @@ party.leader.hp -= 10 // OK ✅
 ```
 
 これまで見てきたように、値型を使えばミュータブルクラスの利便性とイミュータブルクラスの安全性のいいとこどりができるわけですが、それを実現するためには Computed Property を経由しても _左辺値_ になるという言語仕様が欠かせないわけです。
+
+---
+
+- [次の課題](04-a.md)

@@ -4,9 +4,9 @@
 
 > `mutating func` は `self` を `inout` で渡すことと同じ
 
-と言いましたが、 `05-c-answer.swift` ではまさにそれが体現されています。
+と言いましたが、 [05-c-answer.swift](05-c-answer.swift) ではまさにそれが体現されています。
 
-`04-c2-answer.swift` の `any(of:_:)` は次のようになっていました。
+[04-c2-answer.swift](04-c2-answer.swift) の `any(of:_:)` は次のようになっていました。
 
 ```swift
 func any<C: MutableCollection>(
@@ -15,7 +15,7 @@ func any<C: MutableCollection>(
 ) rethrows where C.Index == Int
 ```
 
-`05-c-answer.swift` の `updateRandomElement(using:_:)` を比較すると、 `inout` パラメータが `mutating func` の暗黙の引数 `self` に置き換わっているのがよくわかります。
+[05-c-answer.swift](05-c-answer.swift) の `updateRandomElement(using:_:)` を比較すると、 `inout` パラメータが `mutating func` の暗黙の引数 `self` に置き換わっているのがよくわかります。
 
 ```swift
 mutating func updateRandomElement<T: RandomNumberGenerator>(

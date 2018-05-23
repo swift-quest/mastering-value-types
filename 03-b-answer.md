@@ -1,6 +1,6 @@
 # 03-b: イミュータブルクラス（ Computed Property ） 解答の解説
 
-色々とやり方はありますが、 `03-b-answer.swift` では `Character` 同様に `Party` にも `copy` メソッドを実装しました。
+色々とやり方はありますが、 [03-b-answer.swift](03-b-answer.swift) では `Character` 同様に `Party` にも `copy` メソッドを実装しました。
 
 ```swift
 extension Party {
@@ -24,7 +24,7 @@ for character in friendParty.members {
 }
 ```
 
-イミュータブルクラスのインスタンスを変更しようと思った場合、 01-b2 で見たように、あるプロパティを直接変更するだけならそれほど大変ではありません。
+イミュータブルクラスのインスタンスを変更しようと思った場合、 [01-b2](01-b2.md) で見たように、あるプロパティを直接変更するだけならそれほど大変ではありません。
 
 ```swift
 hero = hero.copy(hp: hero.hp - damage)
@@ -37,3 +37,7 @@ hero = hero.copy(hp: hero.hp - damage)
 Haskell のような関数型言語ではすべてがイミュータブルです。同じような問題は起こらないのでしょうか？
 
 Haskell ではこのような問題に対処するために `Lens` というものを使います。[こちら](http://chris.eidhof.nl/post/lenses-in-swift/)では `Lens` とはどういうものかが Swift を使って解説されています。今日の主題からずれてしまうのでこれ以上深入りはしませんが、興味がある方は後で覗いてみて下さい。
+
+---
+
+- [次の課題](03-c.md)
