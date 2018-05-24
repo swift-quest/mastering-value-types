@@ -1,10 +1,10 @@
 # 07-c: 値型（複数インスタンスの変更・その 2 ） 解答の解説
 
-[06-c-answer.swift](06-c-answer.swift) でやったように、 `performAttack` の第 1 引数 `character` を `inout` パラメータにしようとすると、呼び出し側で困ったことになります。 [03-c-answer.swift](03-c-answer.swift) の呼び出し側は次のようになっていました。
+[06-c-answer.swift](06-c-answer.swift) でやったように、 `performSpell` の第 2 引数に `character` を参照渡ししようとするとエラーになってしまいます。 [07-c.swift](07-c.swift) の当該箇所は次のようになっていました。
 
 ```swift
 for character in friendParty.members {
-    performAttack(by: character, to: &enemyParty.leader)
+    performSpell(.fireball, by: character, to: enemyParty.leader)
 }
 ```
 
@@ -12,11 +12,11 @@ for character in friendParty.members {
 
 ```swift
 for var character in friendParty.members {
-    performAttack(by: &character, to: &enemyParty.leader)
+    performSpell(.fireball, by: character, to: enemyParty.leader)
 }
 ```
 
-これだとコンパイルは通るようになりますが、 `character` への変更は捨てられてしまい、元の `friendParty.members` に反映されることはありません。
+これだとコンパイルは通るようになりますが、 `character` への変更は捨てられてしまい、元の `friendParty.members` に変更が反映されることはありません。
 
 [04-c2-answer.swift](04-c2-answer.swift) で考えたように `inout` パラメータを持つ高階関数を使えばこの `for` 文を置き換えることができます。ここでは、 [04-c2-answer.md](04-c2-answer.md) で考えた `update` メソッドを導入しました。（ただし、 `Array` に対してではなく、より一般的に `MutableCollection` に対して実装しました。）
 
@@ -34,7 +34,7 @@ extension MutableCollection {
 
 ```swift
 friendParty.members.update { character in
-    performAttack(by: &character, to: &enemyParty.leader)
+    performSpell(.fireball, by: &character, to: &enemyParty.leader)
 }
 ```
 
@@ -43,7 +43,7 @@ friendParty.members.update { character in
 ```swift
 // 07-a-answer.swift
 for character in friendParty.members {
-    performAttack(by: character, to: enemyParty.leader)
+    performSpell(.fireball, by: character, to: enemyParty.leader)
 }
 ```
 
