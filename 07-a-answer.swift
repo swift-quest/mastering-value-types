@@ -28,16 +28,53 @@ extension Party {
     }
 }
 
+enum Spell {
+    case attack(name: String, mp: Int, damage: Int)
+
+    var name: String {
+        switch self {
+        case .attack(let name, _, _): return name
+        }
+    }
+
+    var mp: Int {
+        switch self {
+        case .attack(_, let mp, _): return mp
+        }
+    }
+}
+
+extension Spell {
+    static let fireball: Spell = .attack(name: "ファイアボール", mp: 5, damage: 70)
+}
+
 func performAttack(by character: Character, to target: Character) {
     print("\(character.name)のこうげき。")
 
     let damage = Swift.max(0, (character.attack - target.defense) / 2)
     target.hp -= damage
-    character.hp += damage
 
     print("\(target.name)に\(damage)のダメージ！")
-    print("\(character.name)のHPがかいふくした。")
     print()
+}
+
+func performSpell(_ spell: Spell, by character: Character, to target: Character) {
+    defer { print() }
+
+    print("\(character.name)は\(spell.name)のまほうをつかった。")
+
+    guard character.mp >= spell.mp else {
+        print("しかしMPがたりない。")
+        return
+    }
+
+    character.mp -= spell.mp
+
+    switch spell {
+    case .attack(_, _, let damage):
+        target.hp -= damage
+        print("\(target.name)に\(damage)のダメージ！")
+    }
 }
 
 func main() {
@@ -61,11 +98,11 @@ func main() {
     }
 
     for character in friendParty.members {
-        performAttack(by: character, to: enemyParty.leader)
+        performSpell(.fireball, by: character, to: enemyParty.leader)
     }
 
     for character in enemyParty.members {
-        performAttack(by: character, to: friendParty.leader)
+        performSpell(.fireball, by: character, to: friendParty.leader)
     }
 
     for character in friendParty.members {
