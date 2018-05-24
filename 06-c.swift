@@ -14,6 +14,26 @@ struct Character {
     }
 }
 
+enum Spell {
+    case attack(name: String, mp: Int, damage: Int)
+
+    var name: String {
+        switch self {
+        case .attack(let name, _, _): return name
+        }
+    }
+
+    var mp: Int {
+        switch self {
+        case .attack(_, let mp, _): return mp
+        }
+    }
+}
+
+extension Spell {
+    static let fireball: Spell = .attack(name: "ファイアボール", mp: 5, damage: 70)
+}
+
 func performAttack(by character: Character, to target: inout Character) {
     print("\(character.name)のこうげき。")
 
@@ -21,6 +41,20 @@ func performAttack(by character: Character, to target: inout Character) {
     target.hp -= damage
 
     print("\(target.name)に\(damage)のダメージ！")
+    print()
+}
+
+func performSpell(_ spell: Spell, by character: Character, to target: Character) {
+    print("\(character.name)は\(spell.name)のまほうをつかった。")
+
+    character.mp -= spell.mp
+
+    switch spell {
+    case .attack(_, _, let damage):
+        target.hp -= damage
+        print("\(target.name)に\(damage)のダメージ！")
+    }
+
     print()
 }
 
@@ -33,8 +67,8 @@ func main() {
     print("MP \(hero.mp)")
     print()
 
-    performAttack(by: hero, to: &archfiend)
-    performAttack(by: archfiend, to: &hero)
+    performSpell(.fireball, by: hero, to: archfiend)
+    performSpell(.fireball, by: archfiend, to: hero)
 
     print(hero.name)
     print("HP \(hero.hp)")
