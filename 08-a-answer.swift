@@ -112,11 +112,11 @@ func main() {
     }
 
     for character in friendParty.members {
-        performSpell(.healing, by: character, to: enemyParty.leader)
+        performSpell(.healing, by: character, to: friendParty.leader)
     }
 
     for character in enemyParty.members {
-        performSpell(.healing, by: character, to: friendParty.leader)
+        performSpell(.healing, by: character, to: enemyParty.leader)
     }
 
     for character in friendParty.members {
