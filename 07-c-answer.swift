@@ -57,15 +57,13 @@ extension MutableCollection {
     }
 }
 
-func performAttack(by character: inout Character, to target: inout Character) {
+func performAttack(by character: Character, to target: inout Character) {
     print("\(character.name)のこうげき。")
 
     let damage = Swift.max(0, (character.attack - target.defense) / 2)
     target.hp -= damage
-    character.hp += damage
 
     print("\(target.name)に\(damage)のダメージ！")
-    print("\(character.name)のHPがかいふくした。")
     print()
 }
 
