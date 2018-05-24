@@ -76,38 +76,30 @@ print(a) // [5, 3, 2]
 
 これでやりたいことができるとはいえ、苦肉の策という感じです。安全性のためとはいえ、やはり直接 `swap(&a[0], &a[2])` ができないのは `inout` パラメータの限界を感じさせます。
 
-同じことが [08-c-asnwer.swift](08-c-asnwer.swift) の `performRound` メソッドにも言えます。 `performRound` をメソッドを素直に次のように実装したとしましょう。
+同じことが [08-c](08-c.md) にも言えます。 `performSpell` を呼びコードを素直に実装すると次のようになります。
 
 ```swift
-mutating func performRound() {
-    friendParty.members.update { character in
-        performAttack(by: &character, to: &enemyParty.leader)
-    }
+friendParty.members.update { character in
+    performSpell(.healing, by: &character, to: &friendParty.leader)
+}
 
-    enemyParty.members.update { character in
-        performAttack(by: &character, to: &friendParty.leader)
-    }
+enemyParty.members.update { character in
+    performSpell(.healing, by: &character, to: &enemyParty.leader)
 }
 ```
 
-このとき、 `friendParty.members.update { ... }` は `self.friendParty.members.update { ... }` であり、 `self` に対する変更となります。つまり、排他則によってこのクロージャ式の中では `self` に直接変更を加えることはできません。しかし、 `&enemyParty.leader` （ `&self.enemyParty.leader` ）があるので排他則に引っかかります（ Swift 4.1 でこれがコンパイルエラーにならないのはおそらく排他則のチェック漏れのバグです）。
+このとき、 `friendParty.members.update { ... }` は `friendParty` に対する変更となります。つまり、排他則によってこのクロージャ式の中では `friendParty` にアクセスすることはできません。しかし、 `&friendParty.leader` があるので排他則に引っかかります。
 
-そのため、次のように一度変数を介してアクセスしなければなりません。
+排他則を回避するために次のようなコードを書いた場合を考えてみましょう。
 
 ```swift
-mutating func performRound() {
-    var friendParty = self.friendParty; defer { self.friendParty = friendParty }
-    var enemyParty = self.enemyParty; defer { self.enemyParty = enemyParty }
-
-    friendParty.members.update { character in
-        performAttack(by: &character, to: &enemyParty.leader)
-    }
-
-    enemyParty.members.update { character in
-        performAttack(by: &character, to: &friendParty.leader)
-    }
+for i in friendParty.members.indices {
+    var target = friendParty.leader; defer { friendParty.leader = target }
+    performSpell(.healing, by: &friendParty.members[i], to: &target)
 }
 ```
+
+しかし、勇者が勇者自身にヒーリングを使う場合、 MP を消費する勇者と回復される勇者が異なるインスタンスとなり、どちらかの処理結果が無視されてしまいます。上記のコードでは、 MP の消費が無視されています。
 
 これまで値型と `inout` パラメータを駆使してミュータブルクラスと同じように簡単に状態を変更できることを目指してきましたが、ここに限界があります。
 
