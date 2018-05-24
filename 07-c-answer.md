@@ -38,7 +38,7 @@ friendParty.members.update { character in
 }
 ```
 
-これなら、 [07-a-answer.swift](07-a-answer.swift) と似たようなシンプルさで記述できます。
+これなら、 [07-a-answer.swift](07-a-answer.swift) （↓）と同じようなシンプルさです。
 
 ```swift
 // 07-a-answer.swift
