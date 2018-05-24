@@ -14,6 +14,26 @@ class Character {
     }
 }
 
+enum Spell {
+    case attack(name: String, mp: Int, damage: Int)
+
+    var name: String {
+        switch self {
+        case .attack(let name, _, _): return name
+        }
+    }
+
+    var mp: Int {
+        switch self {
+        case .attack(_, let mp, _): return mp
+        }
+    }
+}
+
+extension Spell {
+    static let fireball: Spell = .attack(name: "ファイアボール", mp: 5, damage: 70)
+}
+
 func performAttack(by character: Character, to target: Character) {
     print("\(character.name)のこうげき。")
 
